@@ -23,6 +23,11 @@ go run main.go
 ```
 The application will start running on http://localhost:8080.
 
+### Run automatic tests
+```bash
+go test
+```
+
 ### Test Endpoints
 
 1. Get Power Meters by Customer
