@@ -53,11 +53,22 @@ func getPowerMetersByCustomer(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"powerMeters": powerMetersForCustomer})
 }
 
+func getPowerMeterData(c *gin.Context) {
+	serialID := c.Param("serialID")
+	meter, ok := findPowerMeterData(serialID)
+
+	if ok {
+		c.JSON(http.StatusOK, gin.H{"powerMeterData": meter})
+	}
+	c.JSON(http.StatusNotFound, gin.H{"error": "Power meter not found"})
+
+}
+
 func main() {
 	router := gin.Default()
 
 	router.GET("/power-meters/:customer", getPowerMetersByCustomer)
-
+	router.GET("/power-meter/:serialID", getPowerMeterData)
 	err := router.Run(":8080")
 	if err != nil {
 		fmt.Println("Error starting the server:", err)
