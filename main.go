@@ -11,7 +11,7 @@ type PowerMeterData struct {
 	ConsumptionPerDay float64
 }
 
-var powerMetters = map[string]Building{
+var powerMeters = map[string]Building{
 	"1111-1111-1111": {"Treatment Plant A", "Aquaflow", "1111-1111-1111"},
 	"1111-1111-2222": {"Treatment Plant B", "Aquaflow", "1111-1111-2222"},
 	"1111-1111-3333": {"Student Halls", "Albers Facilities Management", "1111-1111-3333"},
@@ -26,4 +26,16 @@ var meterConsumption = map[string]PowerMeterData{
 func findPowerMeterData(serialID string) (PowerMeterData, bool) {
 	meter, ok := meterConsumption[serialID]
 	return meter, ok
+}
+
+func findPowerMetersByCustomer(customer string) []Building {
+	var powerMetersForCustomer []Building
+
+	for _, meter := range powerMeters {
+		if meter.Customer == customer {
+			powerMetersForCustomer = append(powerMetersForCustomer, meter)
+		}
+	}
+
+	return powerMetersForCustomer
 }
