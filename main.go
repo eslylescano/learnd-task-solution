@@ -1,5 +1,12 @@
 package main
 
+import (
+	"fmt"
+	"net/http"
+
+	"github.com/gin-gonic/gin"
+)
+
 type Building struct {
 	Name     string
 	Customer string
@@ -38,4 +45,21 @@ func findPowerMetersByCustomer(customer string) []Building {
 	}
 
 	return powerMetersForCustomer
+}
+
+func getPowerMetersByCustomer(c *gin.Context) {
+	customer := c.Param("customer")
+	powerMetersForCustomer := findPowerMetersByCustomer(customer)
+	c.JSON(http.StatusOK, gin.H{"powerMeters": powerMetersForCustomer})
+}
+
+func main() {
+	router := gin.Default()
+
+	router.GET("/power-meters/:customer", getPowerMetersByCustomer)
+
+	err := router.Run(":8080")
+	if err != nil {
+		fmt.Println("Error starting the server:", err)
+	}
 }
