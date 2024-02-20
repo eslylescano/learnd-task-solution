@@ -16,3 +16,14 @@ func TestFindPowerMeterData(t *testing.T) {
 		t.Errorf("Expected %v, got %v", expectedMeterData, meter)
 	}
 }
+
+func TestFindPowerMetersByCustomer(t *testing.T) {
+	customer := "Aquaflow"
+	expectedCount := 2
+
+	powerMetersForCustomer := findPowerMetersByCustomer(customer)
+
+	if len(powerMetersForCustomer) != expectedCount {
+		t.Errorf("Expected %d power meters for customer %s, got %d", expectedCount, customer, len(powerMetersForCustomer))
+	}
+}
